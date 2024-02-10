@@ -8,42 +8,44 @@ import {Link} from 'react-router-dom';
 
 function Pagina() {
   //set inputs
-  const[titulo,setTitulo] =useState("");
-  const[idioma,setIdioma] =useState("");
-  const[estudio,setEstudioFilmacion] =useState("");
-  const[clasificacion,setClasificacion] =useState("");
-  const[sinopsis,setSinopsis] =useState("");
-  const[fecha,setFecha] =useState(0);
+  const[nombres,setNombres] =useState("");
+  const[apellidop,setApellidoP] =useState("");
+  const[apellidom,setApellidoM] =useState("");
+  const[direccion,setDirección] =useState("");
+  const[telefeno,setTelefono] =useState("");
+  const[edad,setEdad] =useState(0);
+  const[cantidadmas,setMascotas] =useState(0);
   //boton registrar
   
   //la lista
-  const[PeliculaList,setPelicula] = useState([]);
+  const[ClientList,setClient] = useState([]);
   useEffect(() => {
-    getPeli(); 
+    getClient(); 
   }, []);
 
   const add = ()=>{
     Axios.post("http://localhost:3001/create",{
-      titulo:titulo,
-      idioma:idioma,
-      estudio:estudio,
-      clasificacion:clasificacion,
-      sinopsis:sinopsis,
-      fecha:fecha
+      nombres:nombres,
+      apellidop:apellidop,
+      apellidom:apellidom,
+      direccion:direccion,
+      telefeno:telefeno,
+      edad:edad,
+      cantidadmas:cantidadmas,
     }).then(()=>{
-      getPeli();
+      getClient();
       alert("Usuario registrado");
     });
   }
 
   //llamada a nuestra informacion
-  const getPeli = ()=>{
+  const getClient = ()=>{
     Axios.get("http://localhost:3001/lista")
     .then((response) => {
-      setPelicula(response.data);
+      setClient(response.data);
     })
     .catch((error) => {
-      console.error('Error al obtener la lista de películas:', error);
+      console.error('Error al obtener la lista de clientes:', error);
     });
   }
   
@@ -53,48 +55,48 @@ function Pagina() {
     <div className="container">
     <div className="card text-center">
       <div className="card-header bg-dark text-white">
-        GESTION DE PELICULAS
+        GESTION DE Clientes por atender
       </div>
       <div className="card-body">
         <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Título:</span>
-          <input type="text" onChange={(event)=>{setTitulo(event.target.value)}} 
-            className="form-control" placeholder="Ingrese un Título" aria-label="Username" aria-describedby="basic-addon1"></input>
+          <span className="input-group-text" id="basic-addon1">Nombres:</span>
+          <input type="text" onChange={(event)=>{setNombres(event.target.value)}} 
+            className="form-control" placeholder="Ingrese un nombre" aria-label="Username" aria-describedby="basic-addon1"></input>
         </div>
 
         <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Idioma:</span>
-          <input type="text" onChange={(event)=>{setIdioma(event.target.value)}} 
-            className="form-control" placeholder="Ingrese un Idioma" aria-label="Username" aria-describedby="basic-addon1"></input>
+          <span className="input-group-text" id="basic-addon1">Apellido Paterno:</span>
+          <input type="text" onChange={(event)=>{setApellidoP(event.target.value)}} 
+            className="form-control" placeholder="Ingrese un Apellido Paterno" aria-label="Username" aria-describedby="basic-addon1"></input>
         </div>
 
         <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Estudio de filmación:</span>
-          <input type="text" onChange={(event)=>{setEstudioFilmacion(event.target.value)}} 
-            className="form-control" placeholder="Ingrese un Estudio de filmación" aria-label="Username" aria-describedby="basic-addon1"></input>
+          <span className="input-group-text" id="basic-addon1">Apellido Materno:</span>
+          <input type="text" onChange={(event)=>{setApellidoM(event.target.value)}} 
+            className="form-control" placeholder="Ingrese un Estudio de Apellido Paterno" aria-label="Username" aria-describedby="basic-addon1"></input>
         </div>
 
         <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Clasificación:</span>
-          <input type="text" onChange={(event)=>{setClasificacion(event.target.value)}} 
-            className="form-control" placeholder="Ingrese una Clasificación" aria-label="Username" aria-describedby="basic-addon1"></input>
+          <span className="input-group-text" id="basic-addon1">Dirección:</span>
+          <input type="text" onChange={(event)=>{setDirección(event.target.value)}} 
+            className="form-control" placeholder="Ingrese una Dirección" aria-label="Username" aria-describedby="basic-addon1"></input>
         </div>
 
         <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Sinopsis:</span>
-          <input type="text" onChange={(event)=>{setSinopsis(event.target.value)}} 
-            className="form-control" placeholder="Ingrese una Sinopsis" aria-label="Username" aria-describedby="basic-addon1"></input>
+          <span className="input-group-text" id="basic-addon1">Teléfono:</span>
+          <input type="number" onChange={(event)=>{setTelefono(event.target.value)}} 
+            className="form-control" placeholder="Ingrese una Teléfono" aria-label="Username" aria-describedby="basic-addon1"></input>
         </div>
         <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Fecha:</span>
-          <input type="date" onChange={(event)=>{setFecha(event.target.value)}} 
-            className="form-control" placeholder="Ingrese una Fecha" aria-label="Username" aria-describedby="basic-addon1"></input>
+          <span className="input-group-text" id="basic-addon1">Edad:</span>
+          <input type="number" onChange={(event)=>{setEdad(event.target.value)}} 
+            className="form-control" placeholder="Ingrese una Edad" aria-label="Username" aria-describedby="basic-addon1"></input>
         </div>
-        
-                
-    
-        
-          
+        <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Cantidad de mascotas:</span>
+          <input type="number" onChange={(event)=>{setMascotas(event.target.value)}} 
+            className="form-control" placeholder="Ingrese una Cantidad de mascotas" aria-label="Username" aria-describedby="basic-addon1"></input>
+        </div>
         
       </div>
       <div className="card-footer text-body-secondary">
@@ -105,25 +107,27 @@ function Pagina() {
     <table className="table table-hover">
       <thead className="thead-dark">
         <tr>
-          <th scope="col" className="table-active">#</th>
-          <th scope="col" className="table-active">Título</th>
-          <th scope="col" className="table-active">Idioma</th>
-          <th scope="col" className="table-active">Estudio</th>
-          <th scope="col" className="table-active">Clasificación</th>
-          <th scope="col" className="table-active">Sinopsis</th>
-          <th scope="col" className="table-active">Fecha</th>
+          <th scope="col" className="table-active">DNI</th>
+          <th scope="col" className="table-active">Nombres</th>
+          <th scope="col" className="table-active">Apellido paterno</th>
+          <th scope="col" className="table-active">Apellido materno</th>
+          <th scope="col" className="table-active">Dirección</th>
+          <th scope="col" className="table-active">Teléfono</th>
+          <th scope="col" className="table-active">Edad</th>
+          <th scope="col" className="table-active">Cantidad_mascotas</th>
         </tr>
       </thead>
       <tbody>
-        {PeliculaList.map((val, key) => (
+        {ClientList.map((val, key) => (
           <tr key={key} className={key % 2 === 0 ? 'table-light' : 'table'}>
-            <th scope="row">{val.id_pelicula}</th>
-            <td>{val.Titulo}</td>
-            <td>{val.Idioma}</td>
-            <td>{val.Estudio_filmacion}</td>
-            <td>{val.Clasificacion}</td>
-            <td>{val.Sinopsis}</td>
-            <td>{val.fecha.split('T')[0]}</td>
+            <th scope="row">{val.DNI}</th>
+            <td>{val.Nombres}</td>
+            <td>{val.Apellido_paterno}</td>
+            <td>{val.Apellido_materno}</td>
+            <td>{val.Dirección}</td>
+            <td>{val.Teléfono}</td>
+            <td>{val.Edad}</td>
+            <td>{val.Cantidad_mascotas}</td>
           </tr>
         ))}
       </tbody>

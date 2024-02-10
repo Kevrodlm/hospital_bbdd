@@ -12,30 +12,31 @@ const db = mysql.createConnection({
     host: "localhost", 
     user: "root",
     password: "Promundial1?", 
-    database: "cine"
+    database: "veterinaria"
 });
 
 
 app.post("/create",(req,res)=>{
-    const titulo = req.body.titulo;
-    const idioma = req.body.idioma;
-    const estudio = req.body.estudio;
-    const clasificacion = req.body.clasificacion;
-    const sinopsis = req.body.sinopsis;
-    const fecha = req.body.fecha;
-    db.query('INSERT INTO Peliculas(Titulo,Idioma,Estudio_filmacion,Clasificacion,Sinopsis,fecha) VALUES(?,?,?,?,?,?)',
-            [titulo,idioma,estudio,clasificacion,sinopsis,fecha],(err,result) => {
+    const nombres = req.body.nombres;
+    const apellidop = req.body.apellidop;
+    const apellidom = req.body.apellidom;
+    const direccion = req.body.direccion;
+    const telefeno = req.body.telefeno;
+    const edad = req.body.edad;
+    const cantidadmas = req.body.cantidadmas;
+    db.query('INSERT INTO Cliente(Nombres,Apellido_paterno,Apellido_materno,Dirección,Teléfono,Edad,Cantidad_mascotas) VALUES(?,?,?,?,?,?,?)',
+            [nombres,apellidop,apellidom,direccion,telefeno,edad,cantidadmas],(err,result) => {
                 if(err){
                     console.log(err);
                 }else{
-                    res.send("Película registrada con éxito!");
+                    res.send("Cliente registrado con éxito!");
                 }
             }
     );
 });
 
 app.get("/lista",(req,res)=>{
-    db.query('SELECT * FROM Peliculas;',(err,result) => {
+    db.query('SELECT * FROM Cliente;',(err,result) => {
                 if(err){
                     console.log(err);
                 }else{
