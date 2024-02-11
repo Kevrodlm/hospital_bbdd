@@ -8,36 +8,38 @@ import {Link} from 'react-router-dom';
 
 function Pagina() {
   //set inputs
-  const[nombres,setNombres] =useState("");
-  const[costo,setCosto] =useState(0);
-  const[tamanio,setTamanio] =useState("");
+  const[nombre,setNombre] =useState("");
+  const[medicamentos,setMedicamentos] =useState("");
+  const[sintomas,setSintomas] =useState("");
+  const[mortalidad,setMortalidad] =useState(0);
   //boton registrar
   
   //la lista
-  const[FlorList,setFlor] = useState([]);
+  const[EnList,setEn] = useState([]);
   useEffect(() => {
-    getFlor(); 
+    getEn(); 
   }, []);
 
   const add = ()=>{
     Axios.post("http://localhost:3001/create",{
-      nombres:nombres,
-      costo:costo,
-      tamanio:tamanio,
+    nombre:nombre,
+    medicamentos:medicamentos,
+    sintomas:sintomas,
+    mortalidad:mortalidad,
     }).then(()=>{
-      getFlor();
+      getEn();
       alert("Flor registrada");
     });
   }
 
   //llamada a nuestra informacion
-  const getFlor = ()=>{
+  const getEn = ()=>{
     Axios.get("http://localhost:3001/lista")
     .then((response) => {
-      setFlor(response.data);
+      setEn(response.data);
     })
     .catch((error) => {
-      console.error('Error al obtener la lista de clientes:', error);
+      console.error('Error al obtener la lista de doctores:', error);
     });
   }
   
@@ -47,26 +49,34 @@ function Pagina() {
     <div className="container">
     <div className="card text-center">
       <div className="card-header bg-dark text-white">
-        GESTION DE Productos manejados por la empresa
+        REGISTRO DE ENFERMEDADES:   
       </div>
       <div className="card-body">
         <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Nombres:</span>
-          <input type="text" onChange={(event)=>{setNombres(event.target.value)}} 
-            className="form-control" placeholder="Ingrese un nombre" aria-label="Username" aria-describedby="basic-addon1"></input>
+          <span className="input-group-text" id="basic-addon1">Nombre:</span>
+          <input type="text" onChange={(event)=>{setNombre(event.target.value)}} 
+            className="form-control" placeholder="Ingrese el Nombre de la enfermedad" aria-label="Username" aria-describedby="basic-addon1"></input>
         </div>
 
         <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Costo:</span>
-          <input type="number" onChange={(event)=>{setCosto(event.target.value)}} 
-            className="form-control" placeholder="Ingrese un Costo" aria-label="Username" aria-describedby="basic-addon1"></input>
+          <span className="input-group-text" id="basic-addon1">Medicamentos:</span>
+          <input type="text" onChange={(event)=>{setMedicamentos(event.target.value)}} 
+            className="form-control" placeholder="Ingrese el Medicamento" aria-label="Username" aria-describedby="basic-addon1"></input>
         </div>
 
         <div className="input-group mb-3">
-          <span className="input-group-text" id="basic-addon1">Tamaño:</span>
-          <input type="text" onChange={(event)=>{setTamanio(event.target.value)}} 
-            className="form-control" placeholder="Ingrese un Tamaño" aria-label="Username" aria-describedby="basic-addon1"></input>
+          <span className="input-group-text" id="basic-addon1">Síntomas:</span>
+          <input type="text" onChange={(event)=>{setSintomas(event.target.value)}} 
+            className="form-control" placeholder="Ingrese sus Síntomas" aria-label="Username" aria-describedby="basic-addon1"></input>
         </div>
+
+        <div className="input-group mb-3">
+          <span className="input-group-text" id="basic-addon1">Tasa de mortalidad:</span>
+          <input type="number" onChange={(event)=>{setMortalidad(event.target.value)}} 
+            className="form-control" placeholder="Ingrese la Tasa de mortalidad" aria-label="Username" aria-describedby="basic-addon1"></input>
+        </div>
+
+        
 
         
       </div>
@@ -78,19 +88,19 @@ function Pagina() {
     <table className="table table-hover">
       <thead className="thead-dark">
         <tr>
-          <th scope="col" className="table-active">#</th>
           <th scope="col" className="table-active">Nombre</th>
-          <th scope="col" className="table-active">Costo</th>
-          <th scope="col" className="table-active">Tamaño </th>
+          <th scope="col" className="table-active">Medicamento</th>
+          <th scope="col" className="table-active">Síntomas</th>
+          <th scope="col" className="table-active">Tasa de mortalidad </th>
         </tr>
       </thead>
       <tbody>
-        {FlorList.map((val, key) => (
+        {EnList.map((val, key) => (
           <tr key={key} className={key % 2 === 0 ? 'table-light' : 'table'}>
-            <th scope="row">{val.flores_ID}</th>
             <td>{val.nombre}</td>
-            <td>{val.costo}</td>
-            <td>{val.tamaño}</td>
+            <td>{val.medicamentos}</td>
+            <td>{val.sintomas}</td>
+            <td>{val.tasa_mortalidad}</td>
           </tr>
         ))}
       </tbody>

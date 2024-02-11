@@ -12,17 +12,18 @@ const db = mysql.createConnection({
     host: "localhost", 
     user: "root",
     password: "Promundial1?", 
-    database: "floreria"
+    database: "hospital"
 });
 
 
 app.post("/create",(req,res)=>{
-    const nombre = req.body.nombres;
-    const costo = req.body.costo;
-    const tamaño = req.body.tamanio;
+    const nombre = req.body.nombre;
+    const medicamentos = req.body.medicamentos;
+    const sintomas = req.body.sintomas;
+    const mortalidad = req.body.mortalidad;
 
-    db.query('INSERT INTO Flores(nombre,costo,tamaño) VALUES(?,?,?)',
-            [nombre,costo,tamaño],(err,result) => {
+    db.query('INSERT INTO enfermedades(nombre,medicamentos,sintomas,tasa_mortalidad) VALUES(?,?,?,?)',
+            [nombre,medicamentos,sintomas,mortalidad],(err,result) => {
                 if(err){
                     console.log(err);
                 }else{
@@ -33,7 +34,7 @@ app.post("/create",(req,res)=>{
 });
 
 app.get("/lista",(req,res)=>{
-    db.query('SELECT * FROM Flores;',(err,result) => {
+    db.query('SELECT * FROM enfermedades;',(err,result) => {
                 if(err){
                     console.log(err);
                 }else{
