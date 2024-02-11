@@ -12,31 +12,28 @@ const db = mysql.createConnection({
     host: "localhost", 
     user: "root",
     password: "Promundial1?", 
-    database: "veterinaria"
+    database: "floreria"
 });
 
 
 app.post("/create",(req,res)=>{
-    const nombres = req.body.nombres;
-    const apellidop = req.body.apellidop;
-    const apellidom = req.body.apellidom;
-    const direccion = req.body.direccion;
-    const telefeno = req.body.telefeno;
-    const edad = req.body.edad;
-    const cantidadmas = req.body.cantidadmas;
-    db.query('INSERT INTO Cliente(Nombres,Apellido_paterno,Apellido_materno,Dirección,Teléfono,Edad,Cantidad_mascotas) VALUES(?,?,?,?,?,?,?)',
-            [nombres,apellidop,apellidom,direccion,telefeno,edad,cantidadmas],(err,result) => {
+    const nombre = req.body.nombres;
+    const costo = req.body.costo;
+    const tamaño = req.body.tamanio;
+
+    db.query('INSERT INTO Flores(nombre,costo,tamaño) VALUES(?,?,?)',
+            [nombre,costo,tamaño],(err,result) => {
                 if(err){
                     console.log(err);
                 }else{
-                    res.send("Cliente registrado con éxito!");
+                    res.send("Producto-Flor registrado con éxito!");
                 }
             }
     );
 });
 
 app.get("/lista",(req,res)=>{
-    db.query('SELECT * FROM Cliente;',(err,result) => {
+    db.query('SELECT * FROM Flores;',(err,result) => {
                 if(err){
                     console.log(err);
                 }else{
